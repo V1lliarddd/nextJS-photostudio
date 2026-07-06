@@ -1,0 +1,123 @@
+/* Spotlight.module.css */
+
+.spotlight {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  overflow: hidden;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.spotlight .title {
+  font-size: 80px;
+  color: #fff;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.spotlight .spotlight_track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 1400px;
+  transform: translate(-50%, -50%);
+}
+
+.spotlight .spotlight_panels {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border: 3px solid #fff;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  will-change: left, width;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator .spotlight_focus_indicator_title {
+  font-size: 18px;
+  color: #fff;
+  position: absolute;
+  margin-top: 2.5rem;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator .spotlight_focus_indicator_date {
+  font-size: 18px;
+  color: #fff;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 2.5rem;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator .top_full {
+  top: 100%;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator .bottom_full {
+  bottom: 100%;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator::before,
+.spotlight .spotlight_panels .spotlight_focus_indicator::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  background: #fff;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator::before {
+  bottom: 100%;
+  height: 100svh;
+}
+
+.spotlight .spotlight_panels .spotlight_focus_indicator::after {
+  top: 100%;
+  height: 100svh;
+}
+
+.spotlight .spotlight_panels .spotlight_panel {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  will-change: left, width;
+}
+
+.spotlight .spotlight_panels .spotlight_panel img {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 400px;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 1000px) {
+  .spotlight .spotlight_panels {
+    height: 260px;
+  }
+
+  .spotlight .spotlight_panels .spotlight_panel img {
+    height: 200px;
+  }
+}

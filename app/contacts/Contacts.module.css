@@ -1,0 +1,40 @@
+.contacts {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+}
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 64px;
+}
+
+.subtitle{
+    font-size: 32px;
+}
+
+.contacts_content {
+    display: flex;
+}
+
+.contacts_left_side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contacts_left_side_info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

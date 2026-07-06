@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { IMAGE_DATA } from '../../constants.ts/image-data';
-import './Spotligh.module.css';
+import { IMAGE_DATA } from '../../constants/image-data';
+import s from './Spotlight.module.css';
 
 const PANEL_WIDTH_COLLAPSED = 20;
 const PANEL_WIDTH_EXPANDED = 400;
 const PANEL_WIDTH_EXPANDED_MOBILE = 100;
 const PANEL_GAP = 15;
 const PANEL_COUNT_DESKTOP = 20;
-const PANEL_COUNT_MOBILE = 10;
+const PANEL_COUNT_MOBILE = 7;
 const BREAKPOINT_MOBILE = 1000;
 
 export default function Spotlight() {
@@ -58,7 +58,7 @@ export default function Spotlight() {
 
       return { left, width };
     },
-    [focusedPanel, panelCount, expandedWidth, trackWidth]
+    [focusedPanel, panelCount, expandedWidth, trackWidth],
   );
 
   const focusPanel = useCallback((index: number) => {
@@ -72,29 +72,27 @@ export default function Spotlight() {
   const titleData = IMAGE_DATA[focusedPanel];
 
   return (
-    <section className="spotlight">
-      <h1 className="text-7xl text-white z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif pointer-events-none">
-        AGAWA
-      </h1>
-      <div className="spotlight-track" ref={trackRef}>
-        <div className="spotlight-panels">
+    <section className={s.spotlight}>
+      <h1 className={s.title}>AGAWA</h1>
+      <div className={s.spotlight_track} ref={trackRef}>
+        <div className={s.spotlight_panels}>
           <div
-            className="spotlight-focus-indicator"
+            className={s.spotlight_focus_indicator}
             style={getFocusIndicatorPosition()}
           >
             <h2
-              className={`text-lg text-white absolute mt-2.5 font-serif ${isMobile ? 'bottom-full' : 'top-full'}`}
+              className={`${s.spotlight_focus_indicator_title} ${
+                isMobile ? s.bottom_full : s.top_full
+              }`}
             >
               {titleData[0]}
             </h2>
-            <h2 className="text-lg text-white absolute top-full right-0 mt-2.5 font-serif">
-              {titleData[1]}
-            </h2>
+            <h2 className={s.spotlight_focus_indicator_date}>{titleData[1]}</h2>
           </div>
           {Array.from({ length: panelCount }, (_, i) => (
             <div
               key={`${i}`}
-              className="spotlight-panel"
+              className={s.spotlight_panel}
               style={getPanelPosition(i)}
               onMouseEnter={!isMobile ? () => focusPanel(i) : undefined}
               onClick={isMobile ? () => focusPanel(i) : undefined}
@@ -104,11 +102,6 @@ export default function Spotlight() {
           ))}
         </div>
       </div>
-      <p
-        className={`absolute text-2xl text-white top-11/12 left-1/2 -translate-x-1/2 font-serif ${isMobile ? 'w-full text-center' : ''}`}
-      >
-        We create unforgettable moments.
-      </p>
     </section>
   );
 }
