@@ -38,7 +38,11 @@ export default function Layout({
           <Link ref={setLinkRef(0)} className={s.layout_overlay_link} href="/">
             Main
           </Link>
-          <Link ref={setLinkRef(1)} className={s.layout_overlay_link} href="/">
+          <Link
+            ref={setLinkRef(1)}
+            className={s.layout_overlay_link}
+            href="/about-us"
+          >
             About Us
           </Link>
           <Link
@@ -48,7 +52,11 @@ export default function Layout({
           >
             Contacts
           </Link>
-          <Link ref={setLinkRef(3)} className={s.layout_overlay_link} href="/">
+          <Link
+            ref={setLinkRef(3)}
+            className={s.layout_overlay_link}
+            href="/prices"
+          >
             Prices
           </Link>
         </nav>

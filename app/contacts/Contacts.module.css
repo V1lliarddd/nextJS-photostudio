@@ -4,7 +4,6 @@
     align-items: center;
     flex-direction: column;
     color: #fff;
-    gap: 40px;
 }
 
 .heading {
@@ -15,13 +14,14 @@
 }
 
 .title {
-    font-size: 64px;
+    font-size: clamp(36px, 6vw, 72px);
 }
 
 .subtitle{
-    font-size: 32px;
+    font-size: clamp(16px, 2vw, 28px);
 }
 
 .contacts_content {
-    display: flex;    
+    display: flex;
+    margin-top: 50px;    
 }

@@ -13,7 +13,9 @@ export default function Contacts() {
             Ready To Create Your Own Piece Of Memory?
           </p>
         </div>
-        <Form />
+        <div className={s.contacts_content}>
+          <Form />
+        </div>
       </section>
     </>
   );

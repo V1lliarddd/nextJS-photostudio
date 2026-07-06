@@ -1,0 +1,30 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 100%;
+    border: 1px solid #fff;
+    height: 100%;
+    justify-content: space-around;
+}
+
+.title {
+    text-transform: capitalize;
+    font-size: 24px;
+    color: #fff;
+    justify-self: flex-start;
+}
+
+.description {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #fff;
+    justify-self: flex-start;
+}
+
+.price {
+    margin-top: 15px;
+    font-size: 32px;
+    color: #fff;
+    justify-self: flex-start;
+}
