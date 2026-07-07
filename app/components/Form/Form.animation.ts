@@ -72,6 +72,7 @@ function createInitAnimation(refs: Refs): GSAPTimeline {
       {
         opacity: 1,
       },
+      '<0.1',
     )
     .fromTo(
       submitRef.current,
@@ -81,6 +82,7 @@ function createInitAnimation(refs: Refs): GSAPTimeline {
       {
         opacity: 1,
       },
+      '<0.1',
     );
 
   return timeline;
