@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import s from './Form.module.css';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
+import { initAnimations } from './Form.animation';
 
 export default function Form() {
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const firstNameRef = useRef<HTMLInputElement | null>(null);
   const lastNameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -18,82 +17,27 @@ export default function Form() {
   };
 
   useGSAP(() => {
-    const timeline = gsap.timeline();
+    const refs = {
+      firstNameRef,
+      lastNameRef,
+      emailRef,
+      serviceRef,
+      descriptionRef,
+      submitRef,
+    };
+
+    const { initAnimation, onMouseEnterAnimation, onMouseLeaveAnimation } =
+      initAnimations(refs);
 
     submitRef.current?.addEventListener('mouseenter', () => {
-      gsap.to(submitRef.current, {
-        scale: 1.05,
-        duration: 0.5,
-      });
+      onMouseEnterAnimation();
     });
 
     submitRef.current?.addEventListener('mouseleave', () => {
-      gsap.to(submitRef.current, {
-        scale: 1,
-        duration: 0.5,
-      });
+      onMouseLeaveAnimation();
     });
 
-    timeline
-      .fromTo(
-        firstNameRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-          onComplete: () => firstNameRef.current?.focus(),
-        },
-        '<0.1',
-      )
-      .fromTo(
-        lastNameRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        '<0.1',
-      )
-      .fromTo(
-        emailRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        '<0.1',
-      )
-      .fromTo(
-        serviceRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        '<0.1',
-      )
-      .fromTo(
-        descriptionRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-      )
-      .fromTo(
-        submitRef.current,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-      );
+    initAnimation.play();
   });
 
   return (

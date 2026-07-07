@@ -3,8 +3,13 @@ export const services = [
     id: '1',
     title: 'photography',
     price: '150',
-    description:
-      'Light. Emotion. Story. We combine all three to create images that speak for themselves. Whether in the studio or on location, we bring your vision to life — one frame at a time.',
+    description: `At Agawa, we believe that great photography is built on three pillars: light, emotion, and story. Light sets the tone, emotion connects with the viewer, and story gives the image purpose. When these elements align, something extraordinary happens — an image that speaks without words.
+
+Our work takes us from the intimacy of the studio to the energy of on-location shoots. Wherever we are, we bring the same level of dedication and artistry. We work with natural light, studio setups, and creative composition to craft images that are both technically flawless and deeply human.
+
+Every project begins with a conversation. We take the time to understand your vision, your brand, and your message. From there, we develop a creative approach tailored specifically to you. The result? Images that don't just look beautiful — they feel meaningful.
+
+One frame at a time, we bring your vision to life.`,
   },
   {
     id: '2',

@@ -1,56 +1,167 @@
 .about_us {
-    height: 100%;
+    height: 200svh;
     position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #000;
 }
 
 .title {
-    font-size: 64px;
-    text-transform: uppercase;
-    color: #fff;
+  font-size: 64px;
+  text-transform: uppercase;
+  color: #fff;
+  position: fixed;
 }
 
 .subtitle {
-    font-size: 32px;
-    color: #fff;
+  font-size: 32px;
+  color: #fff;
 }
 
 .image_container_row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80svh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  gap: 12px;
+  padding: 0 20px;
 }
 
-.image_container_row img{
-    height: 80%;
-    width: 15%;
-    object-fit: cover;
-    object-position: center;
+.image_container_row img {
+  height: 80%;
+  width: 15%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+  transition: filter 0.3s;
+}
+
+.image_container_row img:hover {
+  filter: brightness(1.2);
 }
 
 .image_container_row_text {
-    font-size: clamp(28px, 5vw, 56px);
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-transform: uppercase;
-    width: 100%;
-    text-align: center;
+  font-size: clamp(28px, 5vw, 56px);
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.8);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  letter-spacing: 4px;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .description {
-    font-size: clamp(16px, 2vw, 24px);
-    color: #fff;
-    position: absolute;
-    left: 100%;
-    width: 50%;
+  position: absolute;
+  max-width: 500px;
+  width: 50%;
+  font-size: clamp(16px, 1.6vw, 22px);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  font-weight: 300;
+  margin: 0;
+  padding: 0 20px;
+  z-index: 5;
+  will-change: transform, opacity, left, filter;
+  backface-visibility: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  transform: translateX(-50%);
+}
+
+.description_first {
+  top: 35%;
+  left: 50%;
+}
+
+.description_second {
+  top: 55%;
+  left: 50%;
+}
+
+@media (max-width: 1024px) {
+  .image_container_row img {
+    height: 60%;
+    width: 18%;
+  }
+
+  .description {
+    width: 70%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about_us {
+    height: 200svh;
+  }
+
+  .image_container_row {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .image_container_row img {
+    height: 40%;
+    width: 25%;
+  }
+
+  .image_container_row_text {
+    font-size: clamp(18px, 4vw, 28px);
+    letter-spacing: 2px;
+  }
+
+  .description {
+    width: 85%;
+    max-width: 100%;
+    font-size: clamp(14px, 2.5vw, 18px);
+    padding: 0 12px;
+  }
+
+  .description_first {
+    top: 30%;
+  }
+
+  .description_second {
+    top: 55%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about_us {
+    height: 150svh;
+  }
+
+  .image_container_row img {
+    height: 30%;
+    width: 30%;
+  }
+
+  .image_container_row_text {
+    font-size: clamp(14px, 4vw, 20px);
+  }
+
+  .description_first {
+    top: 25%;
+  }
+
+  .description_second {
+    top: 50%;
+  }
 }

@@ -52,13 +52,6 @@ export default function Layout({
           >
             Contacts
           </Link>
-          <Link
-            ref={setLinkRef(3)}
-            className={s.layout_overlay_link}
-            href="/prices"
-          >
-            Prices
-          </Link>
         </nav>
         {children}
         <h2 className={s.layout_overlay_year}>2026</h2>
