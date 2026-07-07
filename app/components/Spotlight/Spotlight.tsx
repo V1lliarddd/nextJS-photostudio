@@ -3,31 +3,26 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { IMAGE_DATA } from '../../constants/image-data';
 import s from './Spotlight.module.css';
-
-const PANEL_WIDTH_COLLAPSED = 20;
-const PANEL_WIDTH_EXPANDED = 400;
-const PANEL_WIDTH_EXPANDED_MOBILE = 100;
-const PANEL_GAP = 15;
-const PANEL_COUNT_DESKTOP = 20;
-const PANEL_COUNT_MOBILE = 7;
-const BREAKPOINT_MOBILE = 1000;
+import * as spotlightData from '../../constants/spotlight-data';
 
 export default function Spotlight() {
-  const trackRef = useRef(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const [trackWidth, setTrackWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [focusedPanel, setFocusedPanel] = useState(0);
   const prevPanelCountRef = useRef(0);
 
-  const panelCount = isMobile ? PANEL_COUNT_MOBILE : PANEL_COUNT_DESKTOP;
+  const panelCount = isMobile
+    ? spotlightData.PANEL_COUNT_MOBILE
+    : spotlightData.PANEL_COUNT_DESKTOP;
   const expandedWidth = isMobile
-    ? PANEL_WIDTH_EXPANDED_MOBILE
-    : PANEL_WIDTH_EXPANDED;
+    ? spotlightData.PANEL_WIDTH_EXPANDED_MOBILE
+    : spotlightData.PANEL_WIDTH_EXPANDED;
 
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => {
       setTrackWidth(entry.contentRect.width);
-      setIsMobile(window.innerWidth < BREAKPOINT_MOBILE);
+      setIsMobile(window.innerWidth < spotlightData.BREAKPOINT_MOBILE);
     });
     if (trackRef.current) observer.observe(trackRef.current);
     return () => observer.disconnect();
@@ -43,18 +38,25 @@ export default function Spotlight() {
   const getPanelPosition = useCallback(
     (panelIndex: number) => {
       const totalTrackWidth =
-        (panelCount - 1) * (PANEL_WIDTH_COLLAPSED + PANEL_GAP) + expandedWidth;
+        (panelCount - 1) *
+          (spotlightData.PANEL_WIDTH_COLLAPSED + spotlightData.PANEL_GAP) +
+        expandedWidth;
 
       const offsetToCenter = (trackWidth - totalTrackWidth) / 2;
 
       let left = offsetToCenter;
       for (let i = 0; i < panelIndex; i++) {
-        const w = i === focusedPanel ? expandedWidth : PANEL_WIDTH_COLLAPSED;
-        left += w + PANEL_GAP;
+        const w =
+          i === focusedPanel
+            ? expandedWidth
+            : spotlightData.PANEL_WIDTH_COLLAPSED;
+        left += w + spotlightData.PANEL_GAP;
       }
 
       const width =
-        panelIndex === focusedPanel ? expandedWidth : PANEL_WIDTH_COLLAPSED;
+        panelIndex === focusedPanel
+          ? expandedWidth
+          : spotlightData.PANEL_WIDTH_COLLAPSED;
 
       return { left, width };
     },
@@ -91,7 +93,7 @@ export default function Spotlight() {
           </div>
           {Array.from({ length: panelCount }, (_, i) => (
             <div
-              key={`${i}`}
+              key={`panel-${i}`}
               className={s.spotlight_panel}
               style={getPanelPosition(i)}
               onMouseEnter={!isMobile ? () => focusPanel(i) : undefined}

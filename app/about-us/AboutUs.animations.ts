@@ -1,5 +1,4 @@
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import TextPlugin from 'gsap/TextPlugin';
 import { ScrollTrigger } from 'gsap/all';
 import { RefObject } from 'react';
@@ -131,8 +130,26 @@ function createScrollAnimation(refs: Refs) {
 }
 
 export function initAnimations(refs: Refs) {
+  const lockScroll = () => {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    if (refs.container.current) {
+      refs.container.current.style.overflow = 'hidden';
+    }
+  };
+
+  const unlockScroll = () => {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    if (refs.container.current) {
+      refs.container.current.style.overflow = '';
+    }
+  };
+
+  lockScroll();
+
   const initialAnimation = createInitialAnimation(refs);
   const scrollAnimation = createScrollAnimation(refs);
 
-  return { initialAnimation, scrollAnimation };
+  return { initialAnimation, scrollAnimation, unlockScroll };
 }

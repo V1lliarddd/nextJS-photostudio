@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import s from './AboutUs.module.css';
 import { initAnimations } from './AboutUs.animations';
 import { useGSAP } from '@gsap/react';
@@ -12,22 +12,6 @@ export default function AboutUs() {
   const firstDescriptionPart = useRef<HTMLParagraphElement | null>(null);
   const secondDescriptionPart = useRef<HTMLParagraphElement | null>(null);
 
-  useEffect(() => {
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    if (container.current) {
-      container.current.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-      if (container.current) {
-        container.current.style.overflow = '';
-      }
-    };
-  }, []);
-
   useGSAP(() => {
     const refs = {
       container,
@@ -38,16 +22,18 @@ export default function AboutUs() {
     };
 
     const animations = initAnimations(refs);
+
+    return () => animations.unlockScroll();
   });
 
   return (
     <section ref={container} className={s.about_us}>
       <div className={s.image_container_row} ref={imageContainerRef}>
-        <img src="./images/spotlight-1.jpg" alt="" />
-        <img src="./images/spotlight-2.jpg" alt="" />
-        <img src="./images/spotlight-3.jpg" alt="" />
-        <img src="./images/spotlight-4.jpg" alt="" />
-        <img src="./images/spotlight-5.jpg" alt="" />
+        <img src="./images/spotlight-1.jpg" loading="lazy" alt="" />
+        <img src="./images/spotlight-2.jpg" loading="lazy" alt="" />
+        <img src="./images/spotlight-3.jpg" loading="lazy" alt="" />
+        <img src="./images/spotlight-4.jpg" loading="lazy" alt="" />
+        <img src="./images/spotlight-5.jpg" loading="lazy" alt="" />
         <h2 ref={introPhraseRef} className={s.image_container_row_text}></h2>
       </div>
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 import s from './Form.module.css';
 import { useGSAP } from '@gsap/react';
