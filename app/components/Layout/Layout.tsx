@@ -16,14 +16,8 @@ export default function Layout({
   useGSAP(() => {
     gsap.fromTo(
       links.current,
-      {
-        y: '-150%',
-      },
-      {
-        y: '0%',
-        duration: 0.5,
-        stagger: 0.1,
-      },
+      { y: '-150%' },
+      { y: '0%', duration: 0.5, stagger: 0.1 },
     );
   });
 
@@ -32,30 +26,28 @@ export default function Layout({
   };
 
   return (
-    <>
-      <div className={s.layout_overlay} ref={container}>
-        <nav className={s.layout_overlay_nav}>
-          <Link ref={setLinkRef(0)} className={s.layout_overlay_link} href="/">
-            Main
-          </Link>
-          <Link
-            ref={setLinkRef(1)}
-            className={s.layout_overlay_link}
-            href="/about-us"
-          >
-            About Us
-          </Link>
-          <Link
-            ref={setLinkRef(2)}
-            className={s.layout_overlay_link}
-            href="/contacts"
-          >
-            Contacts
-          </Link>
-        </nav>
-        {children}
-        <h2 className={s.layout_overlay_year}>2026</h2>
-      </div>
-    </>
+    <div className={s.layout_overlay} ref={container}>
+      <nav className={s.layout_overlay_nav}>
+        <Link ref={setLinkRef(0)} className={s.layout_overlay_link} href="/">
+          Main
+        </Link>
+        <Link
+          ref={setLinkRef(1)}
+          className={s.layout_overlay_link}
+          href="/about-us"
+        >
+          About Us
+        </Link>
+        <Link
+          ref={setLinkRef(2)}
+          className={s.layout_overlay_link}
+          href="/contacts"
+        >
+          Contacts
+        </Link>
+      </nav>
+      {children}
+      <h2 className={s.layout_overlay_year}>2026</h2>
+    </div>
   );
 }
