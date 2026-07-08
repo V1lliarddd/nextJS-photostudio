@@ -4,6 +4,9 @@ import { useRef, useState } from 'react';
 import s from './Form.module.css';
 import { useGSAP } from '@gsap/react';
 import { initAnimations } from './Form.animation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { schema, TSchema } from './Form.schema';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 export default function Form() {
   const firstNameRef = useRef<HTMLInputElement | null>(null);
@@ -13,87 +16,31 @@ export default function Form() {
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
   const submitRef = useRef<HTMLButtonElement | null>(null);
 
-  const [formData, setFromData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    service: '',
-    description: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
+    setError,
+  } = useForm<TSchema>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      service: '',
+      description: '',
+    },
   });
 
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    service: string;
-    description: string;
-  }
+  const onSubmit: SubmitHandler<TSchema> = async (data) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-  interface FormErrors {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    service?: string;
-    description?: string;
-  }
-
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmit, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) => {
-    const { name, value } = e.target;
-    setFromData((prev) => ({ ...prev, [name]: value }));
-
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+      reset();
+    } catch (e) {
+      setError('root', { message: 'Something went wrong :(' });
     }
-  };
-
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Enter a valid email';
-    }
-
-    if (!formData.service.trim()) {
-      newErrors.service = 'Select a service';
-    }
-
-    if (!formData.description.trim()) {
-      newErrors.description = 'Project description is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault();
-    if (!validate()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setIsError(false);
-    setIsSuccess(true);
-    console.log('Ну как-будто что-то отправилось и вообще все в шоколаде');
   };
 
   useGSAP(() => {
@@ -121,52 +68,62 @@ export default function Form() {
   });
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset className={s.fieldset}>
         <label className={s.input}>
           <input
-            ref={firstNameRef}
-            value={formData.firstName}
+            {...register('firstName')}
+            ref={(e) => {
+              register('firstName').ref(e);
+              firstNameRef.current = e;
+            }}
             name="firstName"
-            onChange={handleChange}
             type="text"
             placeholder="First Name"
           />
           {errors.firstName && (
-            <span className={s.error}>{errors.firstName}</span>
+            <span className={s.error}>{errors.firstName.message}</span>
           )}
         </label>
         <label className={s.input}>
           <input
-            ref={lastNameRef}
-            value={formData.lastName}
-            onChange={handleChange}
+            {...register('lastName')}
+            ref={(e) => {
+              register('lastName').ref(e);
+              lastNameRef.current = e;
+            }}
             type="text"
             name="lastName"
             placeholder="Last Name"
           />
           {errors.lastName && (
-            <span className={s.error}>{errors.lastName}</span>
+            <span className={s.error}>{errors.lastName.message}</span>
           )}
         </label>
       </fieldset>
       <fieldset className={s.fieldset}>
         <label className={s.input}>
           <input
-            ref={emailRef}
-            value={formData.email}
-            onChange={handleChange}
+            {...register('email')}
+            ref={(e) => {
+              register('email').ref(e);
+              emailRef.current = e;
+            }}
             type="text"
             name="email"
             placeholder="youremail@domain.com"
           />
-          {errors.email && <span className={s.error}>{errors.email}</span>}
+          {errors.email && (
+            <span className={s.error}>{errors.email.message}</span>
+          )}
         </label>
         <label className={s.input}>
           <select
-            ref={serviceRef}
-            value={formData.service}
-            onChange={handleChange}
+            {...register('service')}
+            ref={(e) => {
+              register('service').ref(e);
+              serviceRef.current = e;
+            }}
             name="service"
           >
             <option value="" disabled>
@@ -176,27 +133,31 @@ export default function Form() {
             <option value="videography">Videography</option>
             <option value="retouch">Group Session</option>
           </select>
-          {errors.service && <span className={s.error}>{errors.service}</span>}
+          {errors.service && (
+            <span className={s.error}>{errors.service.message}</span>
+          )}
         </label>
       </fieldset>
       <label className={s.input}>
         <textarea
-          ref={descriptionRef}
-          value={formData.description}
-          onChange={handleChange}
+          {...register('description')}
+          ref={(e) => {
+            register('description').ref(e);
+            descriptionRef.current = e;
+          }}
           name="description"
           placeholder="Tell us about your project..."
           rows={8}
         />
         {errors.description && (
-          <span className={s.error}>{errors.description}</span>
+          <span className={s.error}>{errors.description.message}</span>
         )}
       </label>
       <button
         ref={submitRef}
         className={s.submit}
         type="submit"
-        disabled={isSubmit}
+        disabled={isSubmitting}
       >
         Submit
       </button>

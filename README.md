@@ -1,4 +1,4 @@
-# 📸 Photostudio — Professional Photography & Videography
+# 📸 Agawa — Professional Photography & Videography
 
 <div align="center">
 
